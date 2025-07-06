@@ -1,0 +1,48 @@
+# pyltover
+
+Python wrapper arround riot games developer api.
+
+## Supported APIs
+
+* Account
+    * v1
+        - [x] Get Account by puuid
+        - [x] Get Account by riot id
+        - [x] Get active shard for a player
+        - [x] Get active region (lol and tft)
+        - [ ] Get account by access token - Not possible with development key
+* Champion Mastery
+    * v4
+        - [ ] Get all champion mastery entries sorted by number of champion points descending.
+        - [ ] Get a champion mastery by puuid and champion ID.
+        - [ ] Get specified number of top champion mastery entries sorted by number of champion points descending.
+        - [ ] Get a player's total champion mastery score, which is the sum of individual champion mastery levels.
+* Champion
+    * v3
+        - [ ] Returns champion rotations, including free-to-play and low-level free-to-play rotations (REST)
+* Clash
+    * v1
+        - [ ] Get players by puuid
+        - [ ] Get team by ID.
+        - [ ] Get all active or upcoming tournaments.
+        - [ ] Get tournament by team ID.
+        - [ ] Get tournament by ID.
+* League entries
+    * v4
+        - [ ] Get all the league entries.
+* League
+    * v4
+        - [ ] Get the challenger league for given queue.
+        - [ ] Get league entries in all queues for a given puuid
+        - [ ] Get all the league entries.
+        - [ ] Get the grandmaster league of a specific queue.
+        - [ ] Get league with given ID, including inactive entries.
+        - [ ] Get the master league for given queue.
+* Challenges
+    * v1
+        - [ ] List of all basic challenge configuration information (includes all translations for names and descriptions)
+        - [ ] Map of level to percentile of players who have achieved it - keys: ChallengeId -> Season -> Level -> percentile of players who achieved it
+        - [ ] Get challenge configuration (REST)
+        - [ ] Return top players for each level. Level must be MASTER, GRANDMASTER or CHALLENGER.
+        - [ ] Map of level to percentile of players who have achieved it
+        - [ ] Returns player information with list of all progressed challenges (REST)
