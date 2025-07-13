@@ -22,14 +22,10 @@ def riot_api_token():
         with open(".devkey", mode="r") as f:
             return f.read()
     except FileNotFoundError:
-        raise FileNotFoundError(
-            "Please create a file with name .devkey with your token inside it."
-        )
+        raise FileNotFoundError("Please create a file with name .devkey with your token inside it.")
 
 
-accounts_puuid = {
-    "SoltanSoren": "ZcIG4rdQ5B70ykqcHAqmTWHBNYnxSEX8z0ZvmJA-Q43iTNYOMG82E_jy3WZxBLTQ4DK-xon4VIyLoQ"
-}
+accounts_puuid = {"SoltanSoren": "ZcIG4rdQ5B70ykqcHAqmTWHBNYnxSEX8z0ZvmJA-Q43iTNYOMG82E_jy3WZxBLTQ4DK-xon4VIyLoQ"}
 accounts_game_names = {"SoltanSoren": "SoltanSoren"}
 accounts_taglines = {"SoltanSoren": "EUNE"}
 accounts_games = {"SoltanSoren": "lor"}
@@ -145,9 +141,7 @@ async def test_pyltover_apis_200(
 ):
     pyltover = Pyltover(server, riot_api_token)
     api_input_args_tuple = _create_input_args(api_input_args, account_name)
-    response = await getattr(getattr(pyltover, api_version), api_name)(
-        *api_input_args_tuple
-    )
+    response = await getattr(getattr(pyltover, api_version), api_name)(*api_input_args_tuple)
     assert isinstance(response, response_model)
     for key, value in checks.items():
         assert getattr(response, key) == value, (response, key, value)

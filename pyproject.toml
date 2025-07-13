@@ -1,7 +1,7 @@
 [project]
 name = "pyltover"
 version = "0.1.0"
-description = "Add your description here"
+description = "Python wrapper around riot games developer api."
 authors = [
     { name = "Sepehr Hamzehlouy", email = "s.hamzelooy@gmail.com" }
 ]
@@ -10,7 +10,7 @@ dependencies = [
     "httpx>=0.28.1",
 ]
 readme = "README.md"
-requires-python = ">= 3.8"
+requires-python = ">= 3.11"
 
 [build-system]
 requires = ["hatchling"]
@@ -31,3 +31,6 @@ packages = ["src/pyltover"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 120

@@ -1,6 +1,6 @@
 # pyltover
 
-Python wrapper arround riot games developer api.
+Python wrapper around riot games developer api.
 
 ## Supported APIs
 

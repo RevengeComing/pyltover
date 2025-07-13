@@ -14,9 +14,7 @@ Union[
 
 class Pyltover(BasePyltover):
     async def get_account_by_puuid(self, puuid: str) -> schema.Account:
-        url = urls.get_account_by_puuid.format(
-            server_addr=self.server_addr, puuid=puuid
-        )
+        url = urls.get_account_by_puuid.format(server_addr=self.server_addr, puuid=puuid)
         resp = await self.async_client.get(url)
         if resp.status_code == 200:
             account = resp.json()
@@ -28,12 +26,8 @@ class Pyltover(BasePyltover):
         else:
             raise translate_error(resp.json())
 
-    async def get_account_by_riot_id(
-        self, tag_line: str, game_name: str
-    ) -> schema.Account:
-        url = urls.get_account_by_riot_id.format(
-            server_addr=self.server_addr, tag_line=tag_line, game_name=game_name
-        )
+    async def get_account_by_riot_id(self, tag_line: str, game_name: str) -> schema.Account:
+        url = urls.get_account_by_riot_id.format(server_addr=self.server_addr, tag_line=tag_line, game_name=game_name)
         resp = await self.async_client.get(url)
         if resp.status_code == 200:
             account = resp.json()
@@ -45,12 +39,8 @@ class Pyltover(BasePyltover):
         else:
             raise translate_error(resp.json())
 
-    async def get_active_shard_for_player(
-        self, game: str, puuid: str
-    ) -> schema.ActiveShards:
-        url = urls.get_active_shard_for_player.format(
-            server_addr=self.server_addr, game=game, puuid=puuid
-        )
+    async def get_active_shard_for_player(self, game: str, puuid: str) -> schema.ActiveShards:
+        url = urls.get_active_shard_for_player.format(server_addr=self.server_addr, game=game, puuid=puuid)
         resp = await self.async_client.get(url)
         if resp.status_code == 200:
             active_shard = resp.json()
@@ -63,15 +53,11 @@ class Pyltover(BasePyltover):
             raise translate_error(resp.json())
 
     async def get_active_region(self, game: str, puuid: str) -> schema.ActiveRegion:
-        url = urls.get_active_region.format(
-            server_addr=self.server_addr, game=game, puuid=puuid
-        )
+        url = urls.get_active_region.format(server_addr=self.server_addr, game=game, puuid=puuid)
         resp = await self.async_client.get(url)
         if resp.status_code == 200:
             account = resp.json()
-            return schema.ActiveRegion(
-                game=account["game"], puuid=account["puuid"], region=account["region"]
-            )
+            return schema.ActiveRegion(game=account["game"], puuid=account["puuid"], region=account["region"])
         else:
             raise translate_error(resp.json())
 
@@ -80,8 +66,6 @@ class Pyltover(BasePyltover):
         resp = await self.async_client.get(url)
         if resp.status_code == 200:
             account = resp.json()
-            return schema.ActiveRegion(
-                game=account["game"], puuid=account["puuid"], region=account["region"]
-            )
+            return schema.ActiveRegion(game=account["game"], puuid=account["puuid"], region=account["region"])
         else:
             raise translate_error(resp.json())

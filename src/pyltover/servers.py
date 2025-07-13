@@ -48,6 +48,4 @@ class RegionalRoutingValues(StrEnum):
 
 esports_server = "esports.api.riotgames.com"
 
-ServerAddress = Union[
-    PlatformRoutingValues, RegionalRoutingValues, Literal["esports.api.riotgames.com"]
-]
+ServerAddress = Union[PlatformRoutingValues, RegionalRoutingValues, Literal["esports.api.riotgames.com"]]
