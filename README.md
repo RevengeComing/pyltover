@@ -2,6 +2,12 @@
 
 Python wrapper around riot games developer api.
 
+## Installation
+
+The package is uploaded into pypi and you can install it using pip or uv.
+
+`$ pip install pyltover`
+
 ## Supported APIs
 
 * Account
