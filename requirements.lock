@@ -26,6 +26,8 @@ httpx==0.28.1
 idna==3.10
     # via anyio
     # via httpx
+orjson==3.10.18
+    # via pyltover
 pydantic==2.11.7
     # via pyltover
 pydantic-core==2.33.2

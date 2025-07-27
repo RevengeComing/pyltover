@@ -13,10 +13,10 @@ Python wrapper around riot games developer api.
         - [ ] Get account by access token - Not possible with development key
 * Champion Mastery
     * v4
-        - [ ] Get all champion mastery entries sorted by number of champion points descending.
-        - [ ] Get a champion mastery by puuid and champion ID.
-        - [ ] Get specified number of top champion mastery entries sorted by number of champion points descending.
-        - [ ] Get a player's total champion mastery score, which is the sum of individual champion mastery levels.
+        - [x] Get all champion mastery entries sorted by number of champion points descending.
+        - [x] Get a champion mastery by puuid and champion ID.
+        - [x] Get specified number of top champion mastery entries sorted by number of champion points descending.
+        - [x] Get a player's total champion mastery score, which is the sum of individual champion mastery levels.
 * Champion
     * v3
         - [ ] Returns champion rotations, including free-to-play and low-level free-to-play rotations (REST)

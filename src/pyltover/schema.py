@@ -1,6 +1,10 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from decimal import Decimal
+
+
+class ChampionNotFound(Exception):
+    pass
 
 
 class ChampionInfo(BaseModel):
@@ -24,27 +28,27 @@ class ChampionStats(BaseModel):
     hp: int
     hpperlevel: int
     mp: int
-    mpperlevel: int
+    mpperlevel: float
     movespeed: int
     armor: int
     armorperlevel: float
     spellblock: int
     spellblockperlevel: float
     attackrange: int
-    hpregen: int
+    hpregen: float
     hpregenperlevel: float
-    mpregen: int
-    mpregenperlevel: int
+    mpregen: float
+    mpregenperlevel: float
     crit: int
     critperlevel: int
     attackdamage: int
-    attackdamageperlevel: int
+    attackdamageperlevel: float
     attackspeedperlevel: float
     attackspeed: float
 
 
 class Champion(BaseModel):
-    version: Optional[str]
+    version: Optional[str] = None
     id: str
     key: Decimal
     name: str
@@ -75,18 +79,18 @@ class ChampionSpell(BaseModel):
     tooltip: str
     leveltip: SpellTip
     maxrank: int
-    cooldown: list[int]
-    cooldownBurn: int
+    cooldown: list[float]
+    cooldown_burn: str = Field(alias="cooldownBurn")
     cost: list[int]
-    costBurn: str  # "60/65/70/75/80"
+    cost_burn: str = Field(alias="costBurn")  # "60/65/70/75/80"
     datavalues: dict
     effect: list[None | list[int]]
-    effectBurn: list[Decimal | None]
+    effect_burn: list[Decimal | None] = Field(alias="effectBurn")
     vars: list
-    costType: str
+    cost_type: str = Field(alias="costType")
     maxammo: Decimal
     range: list[int]
-    rangeBurn: Decimal
+    range_burn: Decimal = Field(alias="rangeBurn")
     image: Image
     resource: str
 
@@ -108,11 +112,31 @@ class ChampionWithDetails(Champion):
     recommended: list
 
 
-class ChampionResponse(BaseModel):
+class ChampionsDB(BaseModel):
     type: str
     format: str
     version: str
     data: dict[str, Champion]
+    key_to_champion: Optional[dict[int, Champion]] = None
+
+    def model_post_init(self, _):
+        self.key_to_champion = {}
+        for _, champion in self.data.items():
+            self.key_to_champion[int(champion.key)] = champion
+
+    def get_champion_by_name(self, name: str):
+        champ = self.data.get(name)
+        if champ:
+            return champ
+
+        raise ChampionNotFound(f"Champion {name} not found.")
+
+    def get_champion_by_id(self, id: int):
+        champ = self.key_to_champion.get(id)
+        if champ:
+            return champ
+
+        raise ChampionNotFound(f"Champion {id} not found.")
 
 
 class ChampionWithDetailsResponse(BaseModel):

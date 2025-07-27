@@ -1,26 +1,53 @@
 import httpx
 
 from pyltover import servers
+from pyltover.schema import ChampionWithDetails, ChampionWithDetailsResponse, ChampionsDB
 
 
 class BasePyltover:
+    ddragon_version = "15.13.1"
+    champions_db = None
+    async_client = None
+    ddragon_cdn_address = "ddragon.leagueoflegends.com"
+
     def __init__(
         self,
         server_addr: servers.ServerAddress,
         riot_token: str,
-        async_client: httpx.AsyncClient = None,
     ):
         self.riot_token = riot_token
         self.server_addr = server_addr
 
-        self.async_client = async_client
+        BasePyltover.async_client = httpx.AsyncClient(headers={"X-Riot-Token": self.riot_token})
+        BasePyltover.champions_db = None
+        BasePyltover.champion_details_db = {"by_id": {}, "by_name": {}}
 
-        self.ddragon_version = "15.13.1"
+    async def init_champions_db(self):
+        """preloads champions data"""
+        champion_db = await self._fetch_ddragon_champions_json()
+        BasePyltover.champions_db = champion_db
 
-    async def init(self):
-        _ = await self._fetch_ddragon_champion_json(
-            f"https://ddragon.leagueoflegends.com/cdn/{self.ddragon_version}/data/en_US/champion.json"
-        )
+    async def get_champion_details(self, id: int) -> ChampionWithDetails:
+        if not self.champion_details_db["by_id"].get(id):
+            name = self.champions_db.get_champion_by_id(id).name
+            champion_details = await self._fetch_ddragon_champion_details(name)
+            self.champion_details_db["by_id"][id] = champion_details
+            self.champion_details_db["by_name"][name] = champion_details
+        return self.champion_details_db["by_id"][id]
 
-    async def _fetch_ddragon_champion_json(self):
-        pass
+    async def get_champion_details_by_name(self, name: str) -> ChampionWithDetails:
+        if not self.champion_details_db["by_id"].get(name):
+            champion_details = await self._fetch_ddragon_champion_details(name)
+            self.champion_details_db["by_name"][name] = champion_details
+            self.champion_details_db["by_id"][champion_details.id] = champion_details
+        return self.champion_details_db["by_name"][name]
+
+    async def _fetch_ddragon_champions_json(self) -> ChampionsDB:
+        url = f"https://{BasePyltover.ddragon_cdn_address}/cdn/{self.ddragon_version}/data/en_US/champion.json"
+        resp = await self.async_client.get(url)
+        return ChampionsDB.model_validate_json(resp.content)
+
+    async def _fetch_ddragon_champion_details(cls, name: str) -> ChampionWithDetails:
+        url = f"https://{BasePyltover.ddragon_cdn_address}/cdn/{cls.ddragon_version}/data/en_US/champion/{name}.json"
+        resp = await cls.async_client.get(url)
+        return ChampionWithDetailsResponse.model_validate_json(resp.content).data[name]
