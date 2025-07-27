@@ -19,7 +19,7 @@ Python wrapper around riot games developer api.
         - [x] Get a player's total champion mastery score, which is the sum of individual champion mastery levels.
 * Champion
     * v3
-        - [ ] Returns champion rotations, including free-to-play and low-level free-to-play rotations (REST)
+        - [x] Returns champion rotations, including free-to-play and low-level free-to-play rotations (REST)
 * Clash
     * v1
         - [ ] Get players by puuid
@@ -63,6 +63,9 @@ async def main():
 
     account_details = await pyltover.europe.v1.get_account_by_puuid("puuid")
     print(account_details)
+
+    champion_rotation = await pyltover.euw.v3.get_champion_rotaions("puuid")
+    print(champion_rotation)
 
 asyncio.run(main())
 ```
