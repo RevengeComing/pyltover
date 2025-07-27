@@ -1,6 +1,5 @@
 import httpx
 
-from pyltover import servers
 from pyltover.schema import ChampionWithDetails, ChampionWithDetailsResponse, ChampionsDB
 
 
@@ -12,20 +11,17 @@ class BasePyltover:
 
     def __init__(
         self,
-        server_addr: servers.ServerAddress,
         riot_token: str,
     ):
         self.riot_token = riot_token
-        self.server_addr = server_addr
 
         BasePyltover.async_client = httpx.AsyncClient(headers={"X-Riot-Token": self.riot_token})
-        BasePyltover.champions_db = None
         BasePyltover.champion_details_db = {"by_id": {}, "by_name": {}}
 
-    async def init_champions_db(self):
+    @classmethod
+    async def init_champions_db(cls):
         """preloads champions data"""
-        champion_db = await self._fetch_ddragon_champions_json()
-        BasePyltover.champions_db = champion_db
+        BasePyltover.champions_db = await cls._fetch_ddragon_champions_json()
 
     async def get_champion_details(self, id: int) -> ChampionWithDetails:
         if not self.champion_details_db["by_id"].get(id):
@@ -42,11 +38,13 @@ class BasePyltover:
             self.champion_details_db["by_id"][champion_details.id] = champion_details
         return self.champion_details_db["by_name"][name]
 
-    async def _fetch_ddragon_champions_json(self) -> ChampionsDB:
-        url = f"https://{BasePyltover.ddragon_cdn_address}/cdn/{self.ddragon_version}/data/en_US/champion.json"
-        resp = await self.async_client.get(url)
+    @classmethod
+    async def _fetch_ddragon_champions_json(cls) -> ChampionsDB:
+        url = f"https://{BasePyltover.ddragon_cdn_address}/cdn/{cls.ddragon_version}/data/en_US/champion.json"
+        resp = await BasePyltover.async_client.get(url)
         return ChampionsDB.model_validate_json(resp.content)
 
+    @classmethod
     async def _fetch_ddragon_champion_details(cls, name: str) -> ChampionWithDetails:
         url = f"https://{BasePyltover.ddragon_cdn_address}/cdn/{cls.ddragon_version}/data/en_US/champion/{name}.json"
         resp = await cls.async_client.get(url)

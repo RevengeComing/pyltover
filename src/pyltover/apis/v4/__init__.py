@@ -10,6 +10,10 @@ ChampionMasteries = TypeAdapter(list[ChampionMastery])
 
 
 class Pyltover(BasePyltover):
+    def __init__(self, server_addr: str, riot_token: str):
+        super().__init__(riot_token)
+        self.server_addr = server_addr
+
     async def get_all_champion_mastery(self, puuid: str, load_champ: bool = False):
         url = urls.get_all_champion_mastery.format(server_addr=self.server_addr, puuid=puuid)
         resp = await Pyltover.async_client.get(url)

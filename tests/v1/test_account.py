@@ -1,7 +1,6 @@
 import pytest
 from pyltover import Pyltover
 from pyltover.apis.errors import RiotAPIError
-from pyltover.servers import RegionalRoutingValues
 from pyltover.apis.v1 import schema as schema_v1
 
 from tests.conftest import (
@@ -28,7 +27,7 @@ from tests.conftest import (
     ],
     [
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_account_by_puuid",
             "SoltanSoren",
@@ -41,7 +40,7 @@ from tests.conftest import (
             },
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_account_by_riot_id",
             "SoltanSoren",
@@ -54,7 +53,7 @@ from tests.conftest import (
             },
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_active_shard_for_player",
             "SoltanSoren",
@@ -67,7 +66,7 @@ from tests.conftest import (
             },
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_active_region",
             "SoltanSoren",
@@ -80,7 +79,7 @@ from tests.conftest import (
             },
         ),
         pytest.param(
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_account_by_access_token",
             "SoltanSoren",
@@ -105,9 +104,9 @@ async def test_pyltover_acount_apis_200(
     response_model,
     checks: dict,
 ):
-    pyltover = Pyltover(server, riot_api_token)
+    pyltover = Pyltover(riot_api_token)
     api_input_args_tuple = create_input_args(api_input_args, account_name)
-    response = await getattr(getattr(pyltover, api_version), api_name)(*api_input_args_tuple)
+    response = await getattr(getattr(getattr(pyltover, server), api_version), api_name)(*api_input_args_tuple)
     assert isinstance(response, response_model)
     for key, value in checks.items():
         assert getattr(response, key) == value, (response, key, value)
@@ -124,7 +123,7 @@ async def test_pyltover_acount_apis_200(
     ],
     [
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_account_by_puuid",
             ("!@invalid puuid!@",),
@@ -132,7 +131,7 @@ async def test_pyltover_acount_apis_200(
             "Bad Request - Exception decrypting !@invalid puuid!@",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_account_by_riot_id",
             ("INC", "ORRECT"),
@@ -140,7 +139,7 @@ async def test_pyltover_acount_apis_200(
             "Data not found - No results found for player with riot id ORRECT#INC",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_active_shard_for_player",
             ("lor", "!@invalid puuid!@"),
@@ -148,7 +147,7 @@ async def test_pyltover_acount_apis_200(
             "Bad Request - Exception decrypting !@invalid puuid!@",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_active_region",
             ("lol", "!@invalid puuid!@"),
@@ -166,9 +165,9 @@ async def test_pyltover_apis_errors(
     status_code,
     error_message,
 ):
-    pyltover = Pyltover(server, riot_api_token)
+    pyltover = Pyltover(riot_api_token)
     try:
-        _ = await getattr(getattr(pyltover, api_version), api_name)(*api_input_args)
+        _ = await getattr(getattr(getattr(pyltover, server), api_version), api_name)(*api_input_args)
         assert False, "Expecting exception"
     except RiotAPIError as error:
         assert error.error_status.status_code == status_code, (

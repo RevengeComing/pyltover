@@ -1,11 +1,10 @@
 import pytest
 from pyltover import Pyltover
 from pyltover.apis.errors import RiotAPIError
-from pyltover.servers import RegionalRoutingValues
 
 
 async def test_ddragon_champions_db(unknown_api_token):
-    pyltover = Pyltover(RegionalRoutingValues.EUROPE.value, unknown_api_token)
+    pyltover = Pyltover(unknown_api_token)
     await pyltover.init_champions_db()
     annie_with_id = Pyltover.champions_db.get_champion_by_id(1)
     annie_with_name = Pyltover.champions_db.get_champion_by_name("Annie")
@@ -15,7 +14,7 @@ async def test_ddragon_champions_db(unknown_api_token):
 
 
 async def test_ddragon_champion_with_details(unknown_api_token):
-    pyltover = Pyltover(RegionalRoutingValues.EUROPE.value, unknown_api_token)
+    pyltover = Pyltover(unknown_api_token)
     annie_details = await pyltover.get_champion_details_by_name("Annie")
     assert annie_details.name == "Annie"
     assert annie_details.lore.startswith("Dangerous, yet disarmingly precocious, Annie is a child mage with")
@@ -32,7 +31,7 @@ async def test_ddragon_champion_with_details(unknown_api_token):
     ],
     [
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_account_by_puuid",
             ("!@invalid puuid!@",),
@@ -40,7 +39,7 @@ async def test_ddragon_champion_with_details(unknown_api_token):
             "Forbidden",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_account_by_riot_id",
             ("INC", "ORRECT"),
@@ -48,7 +47,7 @@ async def test_ddragon_champion_with_details(unknown_api_token):
             "Forbidden",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_active_shard_for_player",
             ("lor", "!@invalid puuid!@"),
@@ -56,7 +55,7 @@ async def test_ddragon_champion_with_details(unknown_api_token):
             "Forbidden",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v1",
             "get_active_region",
             ("lol", "!@invalid puuid!@"),
@@ -64,7 +63,7 @@ async def test_ddragon_champion_with_details(unknown_api_token):
             "Forbidden",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v4",
             "get_all_champion_mastery",
             ("!@invalid puuid!@",),
@@ -72,7 +71,7 @@ async def test_ddragon_champion_with_details(unknown_api_token):
             "Forbidden",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v4",
             "get_champion_mastery",
             ("!@invalid puuid!@", "123"),
@@ -80,7 +79,7 @@ async def test_ddragon_champion_with_details(unknown_api_token):
             "Forbidden",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v4",
             "get_top_champion_mastery_by_count",
             ("!@invalid puuid!@", 3),
@@ -88,7 +87,7 @@ async def test_ddragon_champion_with_details(unknown_api_token):
             "Forbidden",
         ),
         (
-            RegionalRoutingValues.EUROPE.value,
+            "europe",
             "v4",
             "get_total_champion_mastery_score",
             ("!@invalid puuid!@",),
@@ -106,9 +105,9 @@ async def test_pyltover_apis_unauthorized(
     status_code,
     error_message,
 ):
-    pyltover = Pyltover(server, unknown_api_token)
+    pyltover = Pyltover(unknown_api_token)
     try:
-        _ = await getattr(getattr(pyltover, api_version), api_name)(*api_input_args)
+        _ = await getattr(getattr(getattr(pyltover, server), api_version), api_name)(*api_input_args)
         assert False, "Expecting exception"
     except RiotAPIError as error:
         assert error.error_status.status_code == status_code, (

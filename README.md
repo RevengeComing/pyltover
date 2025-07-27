@@ -46,3 +46,27 @@ Python wrapper around riot games developer api.
         - [ ] Return top players for each level. Level must be MASTER, GRANDMASTER or CHALLENGER.
         - [ ] Map of level to percentile of players who have achieved it
         - [ ] Returns player information with list of all progressed challenges (REST)
+
+## How to use?
+
+Get your token from  [Riot games developer website](https://developer.riotgames.com/).
+
+```python
+import asyncio
+from pyltover import Pyltover
+
+
+async def main():
+    pyltover = Pyltover("your token")
+    champion_mastery_score = await pyltover.euw.v4.get_total_champion_mastery_score("puuid")
+    print(champion_mastery_score)
+
+    account_details = await pyltover.europe.v1.get_account_by_puuid("puuid")
+    print(account_details)
+
+asyncio.run(main())
+```
+
+Servers are listed as properties under pyltover root object, e.g. `pytlover.euw` or `pyltover.na`. The API versions are listed under each server, e.g. `pyltover.euw.v1` or `pyltover.euw.v4`.
+
+The response objects are Pydantic model objects.

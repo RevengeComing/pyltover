@@ -13,6 +13,10 @@ Union[
 
 
 class Pyltover(BasePyltover):
+    def __init__(self, server_addr: str, riot_token: str):
+        super().__init__(riot_token)
+        self.server_addr = server_addr
+
     async def get_account_by_puuid(self, puuid: str) -> schema.Account:
         url = urls.get_account_by_puuid.format(server_addr=self.server_addr, puuid=puuid)
         resp = await Pyltover.async_client.get(url)
