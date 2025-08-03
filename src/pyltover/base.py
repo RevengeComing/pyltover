@@ -4,7 +4,7 @@ from pyltover.schema import ChampionWithDetails, ChampionWithDetailsResponse, Ch
 
 
 class BasePyltover:
-    ddragon_version = "15.13.1"
+    ddragon_version = "15.15.1"
     champions_db = None
     async_client = None
     ddragon_cdn_address = "ddragon.leagueoflegends.com"

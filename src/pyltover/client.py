@@ -68,25 +68,25 @@ class Pyltover(BasePyltover):
     # Platforms
 
     @property
-    def br(self):
+    def br1(self):
         if self._br is None:
             self._br = PyltoverServerSpecific(PlatformRoutingValues.BR1.value, self.riot_token)
         return self._br
 
     @property
-    def eune(self):
+    def eune1(self):
         if self._eune is None:
             self._eune = PyltoverServerSpecific(PlatformRoutingValues.EUN1.value, self.riot_token)
         return self._eune
 
     @property
-    def euw(self):
+    def euw1(self):
         if self._euw is None:
             self._euw = PyltoverServerSpecific(PlatformRoutingValues.EUW1.value, self.riot_token)
         return self._euw
 
     @property
-    def jp(self):
+    def jp1(self):
         if self._jp is None:
             self._jp = PyltoverServerSpecific(PlatformRoutingValues.JP1.value, self.riot_token)
         return self._jp
@@ -110,19 +110,19 @@ class Pyltover(BasePyltover):
         return self._la2
 
     @property
-    def na(self):
+    def na1(self):
         if self._na is None:
             self._na = PyltoverServerSpecific(PlatformRoutingValues.NA1.value, self.riot_token)
         return self._na
 
     @property
-    def oc(self):
+    def oc1(self):
         if self._oc is None:
             self._oc = PyltoverServerSpecific(PlatformRoutingValues.OC1.value, self.riot_token)
         return self._oc
 
     @property
-    def tr(self):
+    def tr1(self):
         if self._tr is None:
             self._tr = PyltoverServerSpecific(PlatformRoutingValues.TR1.value, self.riot_token)
         return self._tr
@@ -134,31 +134,31 @@ class Pyltover(BasePyltover):
         return self._ru
 
     @property
-    def ph(self):
+    def ph2(self):
         if self._ph is None:
             self._ph = PyltoverServerSpecific(PlatformRoutingValues.PH2.value, self.riot_token)
         return self._ph
 
     @property
-    def sg(self):
+    def sg2(self):
         if self._sg is None:
             self._sg = PyltoverServerSpecific(PlatformRoutingValues.SG2.value, self.riot_token)
         return self._sg
 
     @property
-    def th(self):
+    def th2(self):
         if self._th is None:
             self._th = PyltoverServerSpecific(PlatformRoutingValues.TH2.value, self.riot_token)
         return self._th
 
     @property
-    def tw(self):
+    def tw2(self):
         if self._tw is None:
             self._tw = PyltoverServerSpecific(PlatformRoutingValues.TW2.value, self.riot_token)
         return self._tw
 
     @property
-    def vn(self):
+    def vn2(self):
         if self._vn is None:
             self._vn = PyltoverServerSpecific(PlatformRoutingValues.VN2.value, self.riot_token)
         return self._vn

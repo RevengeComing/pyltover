@@ -7,7 +7,7 @@ from tests.conftest import acounts_puuid
 async def test_get_all_champion_mastery(riot_api_token):
     pyltover = Pyltover(riot_api_token)
     await Pyltover.init_champions_db()
-    champion_masteries = await pyltover.euw.v4.get_all_champion_mastery(acounts_puuid["SoltanSoren"])
+    champion_masteries = await pyltover.euw1.v4.get_all_champion_mastery(acounts_puuid["SoltanSoren"])
     for index, mastery in enumerate(champion_masteries):
         if mastery.champion_id == 64:
             break
@@ -15,7 +15,7 @@ async def test_get_all_champion_mastery(riot_api_token):
     assert champion_masteries[index].champion is None
     assert champion_masteries[index].champion_id == 64
 
-    champion_masteries = await pyltover.euw.v4.get_all_champion_mastery(acounts_puuid["SoltanSoren"], True)
+    champion_masteries = await pyltover.euw1.v4.get_all_champion_mastery(acounts_puuid["SoltanSoren"], True)
     assert champion_masteries[index].champion.name == "Lee Sin"
     assert champion_masteries[index].champion_id == 64
 
@@ -23,11 +23,11 @@ async def test_get_all_champion_mastery(riot_api_token):
 async def test_get_champion_mastery(riot_api_token):
     pyltover = Pyltover(riot_api_token)
     await pyltover.init_champions_db()
-    champion_mastery = await pyltover.euw.v4.get_champion_mastery(acounts_puuid["SoltanSoren"], "64")
+    champion_mastery = await pyltover.euw1.v4.get_champion_mastery(acounts_puuid["SoltanSoren"], "64")
     assert champion_mastery.champion is None
     assert champion_mastery.champion_id == 64
 
-    champion_mastery = await pyltover.euw.v4.get_champion_mastery(acounts_puuid["SoltanSoren"], "64", True)
+    champion_mastery = await pyltover.euw1.v4.get_champion_mastery(acounts_puuid["SoltanSoren"], "64", True)
     assert champion_mastery.champion.name == "Lee Sin"
     assert champion_mastery.champion_id == 64
 
@@ -35,14 +35,14 @@ async def test_get_champion_mastery(riot_api_token):
 async def test_get_top_champion_mastery_by_count(riot_api_token):
     pyltover = Pyltover(riot_api_token)
     await pyltover.init_champions_db()
-    champion_mastery = await pyltover.euw.v4.get_top_champion_mastery_by_count(acounts_puuid["SoltanSoren"], 1)
+    champion_mastery = await pyltover.euw1.v4.get_top_champion_mastery_by_count(acounts_puuid["SoltanSoren"], 1)
     assert champion_mastery[0].champion is None
     assert champion_mastery[0].champion_id == 64
 
 
 async def test_get_total_champion_mastery_score(riot_api_token):
     pyltover = Pyltover(riot_api_token)
-    champion_mastery_score = await pyltover.euw.v4.get_total_champion_mastery_score(acounts_puuid["SoltanSoren"])
+    champion_mastery_score = await pyltover.euw1.v4.get_total_champion_mastery_score(acounts_puuid["SoltanSoren"])
     assert isinstance(champion_mastery_score, int)
     assert champion_mastery_score > 600
 
@@ -58,7 +58,7 @@ async def test_get_total_champion_mastery_score(riot_api_token):
     ],
     [
         (
-            "euw",
+            "euw1",
             "v4",
             "get_all_champion_mastery",
             ("!@invalid puuid!@",),
@@ -66,7 +66,7 @@ async def test_get_total_champion_mastery_score(riot_api_token):
             "Bad Request - Exception decrypting !@invalid puuid!@",
         ),
         (
-            "euw",
+            "euw1",
             "v4",
             "get_champion_mastery",
             ("!@invalid puuid!@", "123"),
@@ -74,7 +74,7 @@ async def test_get_total_champion_mastery_score(riot_api_token):
             "Bad Request - Exception decrypting !@invalid puuid!@",
         ),
         (
-            "euw",
+            "euw1",
             "v4",
             "get_top_champion_mastery_by_count",
             ("!@invalid puuid!@", 3),
@@ -82,7 +82,7 @@ async def test_get_total_champion_mastery_score(riot_api_token):
             "Bad Request - Exception decrypting !@invalid puuid!@",
         ),
         (
-            "euw",
+            "euw1",
             "v4",
             "get_total_champion_mastery_score",
             ("!@invalid puuid!@",),
