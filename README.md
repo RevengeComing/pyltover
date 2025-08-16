@@ -56,6 +56,7 @@ The package is uploaded into pypi and you can install it using pip or uv.
     * v5
         - [x] Get a list of match ids by puuid
         - [x] Get a match by match id
+        - [ ] Get a match timeline by match id
 
 ## How to use?
 
