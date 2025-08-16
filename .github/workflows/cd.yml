@@ -1,4 +1,4 @@
-name: lint-test-fmt
+name: Publish version
 
 on:
   release:
