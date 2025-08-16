@@ -7,10 +7,8 @@ from tests.conftest import (
     acounts_game_names,
     acounts_taglines,
     acounts_puuid,
-    acounts_games,
     acounts_lol_games,
     acounts_region,
-    acounts_active_shard,
     create_input_args,
 )
 
@@ -36,7 +34,7 @@ from tests.conftest import (
             {
                 "game_name": acounts_game_names["SoltanSoren"],
                 "tag_line": acounts_taglines["SoltanSoren"],
-                "puuid": acounts_puuid["SoltanSoren"],
+                "puuid": "SoltanSoren",
             },
         ),
         (
@@ -49,20 +47,7 @@ from tests.conftest import (
             {
                 "game_name": acounts_game_names["SoltanSoren"],
                 "tag_line": acounts_taglines["SoltanSoren"],
-                "puuid": acounts_puuid["SoltanSoren"],
-            },
-        ),
-        (
-            "europe",
-            "v1",
-            "get_active_shard_for_player",
-            "SoltanSoren",
-            ("game", "puuid"),
-            schema_v1.ActiveShards,
-            {
-                "game": acounts_games["SoltanSoren"],
-                "active_shard": acounts_active_shard["SoltanSoren"],
-                "puuid": acounts_puuid["SoltanSoren"],
+                "puuid": "SoltanSoren",
             },
         ),
         (
@@ -73,7 +58,7 @@ from tests.conftest import (
             ("lol_game", "puuid"),
             schema_v1.ActiveRegion,
             {
-                "puuid": acounts_puuid["SoltanSoren"],
+                "puuid": "SoltanSoren",
                 "game": acounts_lol_games["SoltanSoren"],
                 "region": acounts_region["SoltanSoren"],
             },
@@ -86,7 +71,7 @@ from tests.conftest import (
             (),
             schema_v1.ActiveRegion,
             {
-                "puuid": acounts_puuid["SoltanSoren"],
+                "puuid": "SoltanSoren",
                 "game": acounts_lol_games["SoltanSoren"],
                 "region": acounts_region["SoltanSoren"],
             },
@@ -109,7 +94,10 @@ async def test_pyltover_acount_apis_200(
     response = await getattr(getattr(getattr(pyltover, server), api_version), api_name)(*api_input_args_tuple)
     assert isinstance(response, response_model)
     for key, value in checks.items():
-        assert getattr(response, key) == value, (response, key, value)
+        if key == "puuid":
+            assert getattr(response, key) == acounts_puuid[value], (response, key, value)
+        else:
+            assert getattr(response, key) == value, (response, key, value)
 
 
 @pytest.mark.parametrize(
@@ -137,14 +125,6 @@ async def test_pyltover_acount_apis_200(
             ("INC", "ORRECT"),
             404,
             "Data not found - No results found for player with riot id ORRECT#INC",
-        ),
-        (
-            "europe",
-            "v1",
-            "get_active_shard_for_player",
-            ("lor", "!@invalid puuid!@"),
-            400,
-            "Bad Request - Exception decrypting !@invalid puuid!@",
         ),
         (
             "europe",

@@ -1,6 +1,11 @@
-name: Pylint
+name: lint-test-fmt
 
-on: [push]
+on:
+  pull_request:
+    branches: ["*"]
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -14,17 +19,17 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Set up rye
-      uses: eifinger/setup-rye@v4
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v6
     - name: Pin python version
-      run: rye pin ${{ matrix.python-version }}
+      run: uv python pin ${{ matrix.python-version }}
     - name: Sync dependencies
-      run: rye sync
+      run: uv sync
     - name: Lint
-      run: rye lint
+      run: uv run ruff check
     - name: fmt
-      run: rye fmt --check
+      run: uv run ruff format --check
     - name: tests
-      run: rye test
+      run: uv run pytest
       env:
         DEV_RIOT_API_TOKEN: ${{ secrets.DEV_RIOT_API_TOKEN }}

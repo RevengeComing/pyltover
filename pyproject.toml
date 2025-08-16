@@ -1,6 +1,6 @@
 [project]
 name = "pyltover"
-version = "0.1.0"
+version = "0.1.2"
 description = "Python wrapper around riot games developer api."
 authors = [
     { name = "Sepehr Hamzehlouy", email = "s.hamzelooy@gmail.com" }
@@ -17,13 +17,14 @@ requires-python = ">= 3.11"
 requires = ["hatchling==1.26.3"]
 build-backend = "hatchling.build"
 
-[tool.rye]
+[tool.uv]
 managed = true
 dev-dependencies = [
     "pytest>=8.4.1",
     "pytest-asyncio>=1.0.0",
     "ipdb>=0.13.13",
     "nest-asyncio>=1.6.0",
+    "ruff>=0.12.9",
 ]
 
 [tool.hatch.metadata]
