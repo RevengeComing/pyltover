@@ -21,7 +21,7 @@ def riot_api_token():
         raise FileNotFoundError("Please create a file with name .devkey with your token inside it.")
 
 
-acounts_puuid = {"SoltanSoren": "ZcIG4rdQ5B70ykqcHAqmTWHBNYnxSEX8z0ZvmJA-Q43iTNYOMG82E_jy3WZxBLTQ4DK-xon4VIyLoQ"}
+acounts_puuid = {"SoltanSoren": "iyPYkvZg9bA-vnOKhE1ADcmkT6Z89VwQuxm_t9lHJZg-8PDDHqa1ASGzmiobXJ7Pu8wD3ZbqMuHcsw"}
 acounts_game_names = {"SoltanSoren": "SoltanSoren"}
 acounts_taglines = {"SoltanSoren": "EUNE"}
 acounts_games = {"SoltanSoren": "lor"}
