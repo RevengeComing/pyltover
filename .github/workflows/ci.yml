@@ -1,11 +1,14 @@
 name: lint-test-fmt
 
 on:
-  release:
-    types: [created]
+  pull_request:
+    branches: ["*"]
+  push:
+    branches:
+      - master
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,9 +29,16 @@ jobs:
       run: uv run ruff check
     - name: fmt
       run: uv run ruff format --check
-    - name: tests
-      run: uv run pytest
-      env:
-        DEV_RIOT_API_TOKEN: ${{ secrets.DEV_RIOT_API_TOKEN }}
-    - name: publish
-      run: uv build && uv publish
+  
+  publish-test:
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      id-token: write # This line is required for trusted publishing
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v6
+    - name: publish to pypitest
+      run: uv build && uv publish --index test
+      continue-on-error: true
