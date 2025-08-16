@@ -64,13 +64,13 @@ from pyltover import Pyltover
 
 async def main():
     pyltover = Pyltover("your token")
-    champion_mastery_score = await pyltover.euw.v4.get_total_champion_mastery_score("puuid")
+    champion_mastery_score = await pyltover.euw1.v4.get_total_champion_mastery_score("puuid")
     print(champion_mastery_score)
 
     account_details = await pyltover.europe.v1.get_account_by_puuid("puuid")
     print(account_details)
 
-    champion_rotation = await pyltover.euw.v3.get_champion_rotaions("puuid")
+    champion_rotation = await pyltover.euw1.v3.get_champion_rotaions("puuid")
     print(champion_rotation)
 
 asyncio.run(main())
