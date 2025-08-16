@@ -52,6 +52,10 @@ The package is uploaded into pypi and you can install it using pip or uv.
         - [ ] Return top players for each level. Level must be MASTER, GRANDMASTER or CHALLENGER.
         - [ ] Map of level to percentile of players who have achieved it
         - [ ] Returns player information with list of all progressed challenges (REST)
+* Match
+    * v5
+        - [x] Get a list of match ids by puuid
+        - [x] Get a match by match id
 
 ## How to use?
 

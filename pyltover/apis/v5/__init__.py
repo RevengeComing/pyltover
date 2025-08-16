@@ -17,28 +17,18 @@ class Pyltover(BasePyltover):
         else:
             raise translate_error(resp.json())
 
-    async def get_match_by_id(self, puuid: str) -> schema.Account:
-        url = urls.get_match_by_id.format(server_addr=self.server_addr, puuid=puuid)
+    async def get_match_by_id(self, match_id: str) -> schema.Match:
+        url = urls.get_match_by_id.format(server_addr=self.server_addr, match_id=match_id)
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:
-            account = resp.json()
-            return schema.Account(
-                gameName=account["gameName"],
-                puuid=account["puuid"],
-                tagLine=account["tagLine"],
-            )
+            return schema.Match.model_validate_json(resp.text)
         else:
             raise translate_error(resp.json())
 
-    async def get_match_timeline_by_id(self, puuid: str) -> schema.Account:
+    async def get_match_timeline_by_id(self, puuid: str) -> schema.MatchTimeline:
         url = urls.get_match_timeline_by_id.format(server_addr=self.server_addr, puuid=puuid)
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:
-            account = resp.json()
-            return schema.Account(
-                gameName=account["gameName"],
-                puuid=account["puuid"],
-                tagLine=account["tagLine"],
-            )
+            return schema.MatchTimeline()
         else:
             raise translate_error(resp.json())

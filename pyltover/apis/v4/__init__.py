@@ -55,7 +55,6 @@ class Pyltover(BasePyltover):
     async def get_total_champion_mastery_score(self, puuid: str) -> int:
         url = urls.get_total_champion_mastery_score.format(server_addr=self.server_addr, puuid=puuid)
         resp = await Pyltover.async_client.get(url)
-        print(resp.text)
         if resp.status_code == 200:
             return int(resp.text)
         else:

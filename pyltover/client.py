@@ -1,5 +1,5 @@
 from pyltover import servers
-from pyltover.apis import v1, v3, v4
+from pyltover.apis import v1, v2, v3, v4, v5
 from pyltover.base import BasePyltover
 from pyltover.servers import RegionalRoutingValues, PlatformRoutingValues, esports_server
 
@@ -169,7 +169,7 @@ class PyltoverServerSpecific(BasePyltover):
         self.server_addr = server_addr
 
         self.v1 = v1.Pyltover(self.server_addr, riot_token)
-        # self.v2 = v2.Pyltover(self.server_addr, self.riot_token)
+        self.v2 = v2.Pyltover(self.server_addr, riot_token)
         self.v3 = v3.Pyltover(self.server_addr, riot_token)
         self.v4 = v4.Pyltover(self.server_addr, riot_token)
-        # self.v5 = v5.Pyltover(self.server_addr, self.riot_token)
+        self.v5 = v5.Pyltover(self.server_addr, riot_token)
