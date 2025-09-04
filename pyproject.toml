@@ -1,6 +1,6 @@
 [project]
 name = "pyltover"
-version = "0.1.4"
+version = "0.1.5"
 description = "Python wrapper around riot games developer api."
 authors = [
     { name = "Sepehr Hamzehlouy", email = "s.hamzelooy@gmail.com" }
@@ -31,7 +31,7 @@ dev-dependencies = [
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/pyltover"]
+packages = ["pyltover"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
