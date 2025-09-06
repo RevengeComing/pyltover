@@ -63,7 +63,7 @@ class Pyltover(BasePyltover):
             raise translate_error(resp.json())
 
     # League-V4
-    async def get_the_challenger_league_for_queue(self, queue: QueueTypes) -> int:
+    async def get_the_challenger_league_for_queue(self, queue: QueueTypes) -> League:
         url = urls.get_the_challenger_league_for_queue.format(server_addr=self.server_addr, queue=queue.value)
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:
@@ -71,7 +71,7 @@ class Pyltover(BasePyltover):
         else:
             raise translate_error(resp.json())
 
-    async def get_league_entries_for_puuid(self, puuid: str) -> int:
+    async def get_league_entries_for_puuid(self, puuid: str) -> list[LeagueEntry]:
         url = urls.get_league_entries_for_puuid.format(server_addr=self.server_addr, puuid=puuid)
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:
@@ -79,7 +79,7 @@ class Pyltover(BasePyltover):
         else:
             raise translate_error(resp.json())
 
-    async def get_all_the_league_entries(self, queue: QueueTypes, tier: Tier, division: Division) -> int:
+    async def get_all_the_league_entries(self, queue: QueueTypes, tier: Tier, division: Division) -> list[LeagueEntry]:
         url = urls.get_all_the_league_entries.format(
             server_addr=self.server_addr, queue=queue.value, tier=tier.value, division=division.value
         )
@@ -89,7 +89,7 @@ class Pyltover(BasePyltover):
         else:
             raise translate_error(resp.json())
 
-    async def get_the_grandmaster_league_for_queue(self, queue: QueueTypes) -> int:
+    async def get_the_grandmaster_league_for_queue(self, queue: QueueTypes) -> League:
         url = urls.get_the_grandmaster_league_for_queue.format(server_addr=self.server_addr, queue=queue.value)
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:
@@ -97,7 +97,7 @@ class Pyltover(BasePyltover):
         else:
             raise translate_error(resp.json())
 
-    async def get_league_with_id(self, league_id: str) -> int:
+    async def get_league_with_id(self, league_id: str) -> League:
         url = urls.get_league_with_id.format(server_addr=self.server_addr, league_id=league_id)
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:
@@ -105,7 +105,7 @@ class Pyltover(BasePyltover):
         else:
             raise translate_error(resp.json())
 
-    async def get_the_master_league_for_queue(self, queue: QueueTypes) -> int:
+    async def get_the_master_league_for_queue(self, queue: QueueTypes) -> League:
         url = urls.get_the_master_league_for_queue.format(server_addr=self.server_addr, queue=queue.value)
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:

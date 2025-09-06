@@ -1,6 +1,6 @@
 [project]
 name = "pyltover"
-version = "0.1.7"
+version = "0.1.8"
 description = "Python wrapper around riot games developer api."
 authors = [
     { name = "Sepehr Hamzehlouy", email = "s.hamzelooy@gmail.com" }
