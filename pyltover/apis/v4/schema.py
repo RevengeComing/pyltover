@@ -32,3 +32,47 @@ class ChampionMastery(BaseModel):
 
     def set_champion_details(self, champion_with_details: ChampionWithDetails):
         self.champion_with_details = champion_with_details
+
+
+class MiniSeries(BaseModel):
+    losses: int
+    progress: str
+    target: int
+    wins: int
+
+
+class LeagueItem(BaseModel):
+    fresh_blood: bool = Field(alias="freshBlood")
+    wins: int  # Winning team on Summoners Rift.
+    mini_series: Optional[MiniSeries] = Field(None, alias="miniSeries")
+    inactive: bool
+    veteran: bool
+    hot_streak: bool = Field(alias="hotStreak")
+    rank: str
+    league_points: int = Field(alias="leaguePoints")
+    losses: int  # Losing team on Summoners Rift.
+    puuid: str
+
+
+class League(BaseModel):
+    league_id: str = Field(alias="leagueId")
+    entries: list[LeagueItem]
+    tier: str
+    name: str
+    queue: str
+
+
+class LeagueEntry(BaseModel):
+    league_id: str = Field(alias="leagueId")
+    puuid: str  # Player's encrypted puuid.
+    queue_type: str = Field(alias="queueType")
+    tier: str
+    rank: str  # The player's division within a tier.
+    league_points: int = Field(alias="leaguePoints")
+    wins: int  # Winning team on Summoners Rift.
+    losses: int  # Losing team on Summoners Rift.
+    hot_streak: bool = Field(alias="hotStreak")
+    veteran: bool
+    fresh_blood: bool = Field(alias="freshBlood")
+    inactive: bool
+    mini_series: Optional[MiniSeries] = Field(None, alias="miniSeries")

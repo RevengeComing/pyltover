@@ -33,17 +33,14 @@ The package is uploaded into pypi and you can install it using pip or uv.
         - [ ] Get all active or upcoming tournaments.
         - [ ] Get tournament by team ID.
         - [ ] Get tournament by ID.
-* League entries
-    * v4
-        - [ ] Get all the league entries.
 * League
     * v4
-        - [ ] Get the challenger league for given queue.
-        - [ ] Get league entries in all queues for a given puuid
-        - [ ] Get all the league entries.
-        - [ ] Get the grandmaster league of a specific queue.
-        - [ ] Get league with given ID, including inactive entries.
-        - [ ] Get the master league for given queue.
+        - [x] Get the challenger league for given queue.
+        - [x] Get league entries in all queues for a given puuid
+        - [x] Get all the league entries.
+        - [x] Get the grandmaster league of a specific queue.
+        - [x] Get league with given ID, including inactive entries.
+        - [x] Get the master league for given queue.
 * Challenges
     * v1
         - [ ] List of all basic challenge configuration information (includes all translations for names and descriptions)
