@@ -429,7 +429,7 @@ wheels = [
 
 [[package]]
 name = "pyltover"
-version = "0.1.8"
+version = "0.1.11"
 source = { editable = "." }
 dependencies = [
     { name = "httpx" },

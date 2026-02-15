@@ -1,6 +1,15 @@
-import httpx
+import json
+import logging
+from typing import Any, NoReturn
 
+import httpx
+from pydantic import BaseModel as PydanticBaseModel, TypeAdapter, ValidationError
+
+from pyltover.apis.errors import translate_error
 from pyltover.schema import ChampionWithDetails, ChampionWithDetailsResponse, ChampionsDB
+
+
+logger = logging.getLogger(__name__)
 
 
 class BasePyltover:
@@ -42,10 +51,74 @@ class BasePyltover:
     async def _fetch_ddragon_champions_json(cls) -> ChampionsDB:
         url = f"https://{BasePyltover.ddragon_cdn_address}/cdn/{cls.ddragon_version}/data/en_US/champion.json"
         resp = await BasePyltover.async_client.get(url)
-        return ChampionsDB.model_validate_json(resp.content)
+        return cls._model_validate_json(ChampionsDB, resp.content, "ddragon._fetch_ddragon_champions_json", resp)
 
     @classmethod
     async def _fetch_ddragon_champion_details(cls, name: str) -> ChampionWithDetails:
         url = f"https://{BasePyltover.ddragon_cdn_address}/cdn/{cls.ddragon_version}/data/en_US/champion/{name}.json"
         resp = await cls.async_client.get(url)
-        return ChampionWithDetailsResponse.model_validate_json(resp.content).data[name]
+        champion_response = cls._model_validate_json(
+            ChampionWithDetailsResponse, resp.content, "ddragon._fetch_ddragon_champion_details", resp
+        )
+        return champion_response.data[name]
+
+    @staticmethod
+    def _response_json(resp: httpx.Response, api_name: str) -> dict:
+        try:
+            return resp.json()
+        except json.decoder.JSONDecodeError:
+            logger.exception(
+                "JSON decode error in %s (status=%s, url=%s). Response content: %r",
+                api_name,
+                resp.status_code,
+                resp.url,
+                resp.text,
+            )
+            raise
+
+    def _raise_riot_api_error(self, resp: httpx.Response, api_name: str) -> NoReturn:
+        raise translate_error(self._response_json(resp, api_name))
+
+    @staticmethod
+    def _is_json_decode_validation_error(error: ValidationError) -> bool:
+        return any(err.get("type") == "json_invalid" for err in error.errors())
+
+    @staticmethod
+    def _model_validate_json(
+        model: type[PydanticBaseModel], content: bytes | str, api_name: str, resp: httpx.Response | None = None
+    ) -> Any:
+        try:
+            return model.model_validate_json(content)
+        except ValidationError as error:
+            if BasePyltover._is_json_decode_validation_error(error):
+                status_code = resp.status_code if resp else "n/a"
+                url = resp.url if resp else "n/a"
+                body = resp.text if resp else content
+                logger.exception(
+                    "JSON decode error in %s (status=%s, url=%s). Response content: %r",
+                    api_name,
+                    status_code,
+                    url,
+                    body,
+                )
+            raise
+
+    @staticmethod
+    def _adapter_validate_json(
+        adapter: TypeAdapter, content: bytes | str, api_name: str, resp: httpx.Response | None = None
+    ) -> Any:
+        try:
+            return adapter.validate_json(content)
+        except ValidationError as error:
+            if BasePyltover._is_json_decode_validation_error(error):
+                status_code = resp.status_code if resp else "n/a"
+                url = resp.url if resp else "n/a"
+                body = resp.text if resp else content
+                logger.exception(
+                    "JSON decode error in %s (status=%s, url=%s). Response content: %r",
+                    api_name,
+                    status_code,
+                    url,
+                    body,
+                )
+            raise
