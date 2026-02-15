@@ -15,9 +15,11 @@ class Region(StrEnum):
     OC1 = "OC1"
     RU = "RU"
     SG2 = "SG2"
+    PH2 = "PH2"
     TR1 = "TR1"
     TW2 = "TW2"
     VN2 = "VN2"
+    TH2 = "TH2"
 
 
 class PlatformRoutingValues(StrEnum):
@@ -28,6 +30,7 @@ class PlatformRoutingValues(StrEnum):
     KR = "kr.api.riotgames.com"
     LA1 = "la1.api.riotgames.com"
     LA2 = "la2.api.riotgames.com"
+    ME1 = "me1.api.riotgames.com"
     NA1 = "na1.api.riotgames.com"
     OC1 = "oc1.api.riotgames.com"
     TR1 = "tr1.api.riotgames.com"
