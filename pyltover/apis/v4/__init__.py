@@ -34,9 +34,7 @@ class Pyltover(BasePyltover):
         url = urls.get_champion_mastery.format(server_addr=self.server_addr, puuid=puuid, champion_id=champion_id)
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:
-            champion_mastery = self._model_validate_json(
-                ChampionMastery, resp.content, "v4.get_champion_mastery", resp
-            )
+            champion_mastery = self._model_validate_json(ChampionMastery, resp.content, "v4.get_champion_mastery", resp)
             if load_champ:
                 champion = BasePyltover.champions_db.get_champion_by_id(champion_mastery.champion_id)
                 champion_mastery.set_champion_info(champion)
