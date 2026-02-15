@@ -32,6 +32,7 @@ class Pyltover(BasePyltover):
         self._th = None
         self._tw = None
         self._vn = None
+        self._me = None
 
     @property
     def esport(self):
@@ -162,6 +163,12 @@ class Pyltover(BasePyltover):
         if self._vn is None:
             self._vn = PyltoverServerSpecific(PlatformRoutingValues.VN2.value, self.riot_token)
         return self._vn
+
+    @property
+    def me1(self):
+        if self._me is None:
+            self._me = PyltoverServerSpecific(PlatformRoutingValues.ME1.value, self.riot_token)
+        return self._me
 
 
 class PyltoverServerSpecific(BasePyltover):
