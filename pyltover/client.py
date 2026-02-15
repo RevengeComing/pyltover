@@ -17,7 +17,7 @@ class Pyltover(BasePyltover):
         self._sea = None
 
         self._br = None
-        self._eune = None
+        self._eun = None
         self._euw = None
         self._jp = None
         self._kr = None
@@ -74,10 +74,10 @@ class Pyltover(BasePyltover):
         return self._br
 
     @property
-    def eune1(self):
-        if self._eune is None:
-            self._eune = PyltoverServerSpecific(PlatformRoutingValues.EUN1.value, self.riot_token)
-        return self._eune
+    def eun1(self):
+        if self._eun is None:
+            self._eun = PyltoverServerSpecific(PlatformRoutingValues.EUN1.value, self.riot_token)
+        return self._eun
 
     @property
     def euw1(self):
