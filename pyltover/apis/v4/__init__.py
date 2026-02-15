@@ -3,7 +3,7 @@ from pydantic import TypeAdapter
 from pyltover.apis.errors import translate_error
 from pyltover.base import BasePyltover
 from pyltover.apis.v4 import urls
-from pyltover.apis.v4.schema import ChampionMastery, League, LeagueEntry
+from pyltover.apis.v4.schema import ChampionMastery, League, LeagueEntry, Summoner
 from pyltover.apis.schema import Division, Tier, QueueTypes
 
 
@@ -110,5 +110,14 @@ class Pyltover(BasePyltover):
         resp = await Pyltover.async_client.get(url)
         if resp.status_code == 200:
             return League.model_validate_json(resp.content)
+        else:
+            raise translate_error(resp.json())
+
+    # Summoner-V4
+    async def get_summoner_by_puuid(self, encrypted_puuid: str) -> Summoner:
+        url = urls.get_summoner_by_puuid.format(server_addr=self.server_addr, encrypted_puuid=encrypted_puuid)
+        resp = await Pyltover.async_client.get(url)
+        if resp.status_code == 200:
+            return Summoner.model_validate_json(resp.content)
         else:
             raise translate_error(resp.json())

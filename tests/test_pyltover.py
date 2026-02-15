@@ -94,6 +94,14 @@ async def test_ddragon_champion_with_details(unknown_api_token):
             401,
             "Forbidden",
         ),
+        (
+            "euw1",
+            "v4",
+            "get_summoner_by_puuid",
+            ("!@invalid puuid!@",),
+            401,
+            "Forbidden",
+        ),
     ],
 )
 async def test_pyltover_apis_unauthorized(

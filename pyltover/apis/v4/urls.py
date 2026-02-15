@@ -18,3 +18,6 @@ get_all_the_league_entries = "https://{server_addr}/lol/league/v4/entries/{queue
 get_the_grandmaster_league_for_queue = "https://{server_addr}/lol/league/v4/grandmasterleagues/by-queue/{queue}"
 get_league_with_id = "https://{server_addr}/lol/league/v4/leagues/{league_id}"
 get_the_master_league_for_queue = "https://{server_addr}/lol/league/v4/masterleagues/by-queue/{queue}"
+
+# Summoner-V4
+get_summoner_by_puuid = "https://{server_addr}/lol/summoner/v4/summoners/by-puuid/{encrypted_puuid}"

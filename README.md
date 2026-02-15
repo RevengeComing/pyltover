@@ -41,6 +41,9 @@ The package is uploaded into pypi and you can install it using pip or uv.
         - [x] Get the grandmaster league of a specific queue.
         - [x] Get league with given ID, including inactive entries.
         - [x] Get the master league for given queue.
+* Summoner
+    * v4
+        - [x] Get a summoner by encrypted PUUID.
 * Challenges
     * v1
         - [ ] List of all basic challenge configuration information (includes all translations for names and descriptions)

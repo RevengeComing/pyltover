@@ -76,3 +76,10 @@ class LeagueEntry(BaseModel):
     fresh_blood: bool = Field(alias="freshBlood")
     inactive: bool
     mini_series: Optional[MiniSeries] = Field(None, alias="miniSeries")
+
+
+class Summoner(BaseModel):
+    profile_icon_id: int = Field(alias="profileIconId")
+    revision_date: int = Field(alias="revisionDate")
+    summoner_level: int = Field(alias="summonerLevel")
+    puuid: str

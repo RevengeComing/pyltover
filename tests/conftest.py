@@ -23,7 +23,7 @@ def riot_api_token():
 
 acounts_puuid = {"SoltanSoren": "iyPYkvZg9bA-vnOKhE1ADcmkT6Z89VwQuxm_t9lHJZg-8PDDHqa1ASGzmiobXJ7Pu8wD3ZbqMuHcsw"}
 acounts_game_names = {"SoltanSoren": "SoltanSoren"}
-acounts_taglines = {"SoltanSoren": "EUNE"}
+acounts_taglines = {"SoltanSoren": "RPS"}
 acounts_games = {"SoltanSoren": "lor"}
 acounts_lol_games = {"SoltanSoren": "lol"}
 acounts_active_shard = {"SoltanSoren": "blocked"}
