@@ -75,6 +75,9 @@ async def main():
     account_details = await pyltover.europe.v1.get_account_by_puuid("puuid")
     print(account_details)
 
+    summoner = await pyltover.euw1.v4.get_summoner_by_puuid("puuid")
+    print(summoner)
+
     champion_rotation = await pyltover.euw1.v3.get_champion_rotaions("puuid")
     print(champion_rotation)
 
