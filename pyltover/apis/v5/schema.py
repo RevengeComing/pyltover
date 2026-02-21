@@ -36,7 +36,7 @@ class Challenges(BaseModel):
     solo_turrets_lategame: Optional[int] = Field(None, alias="soloTurretsLategame")
     takedowns_first25_minutes: Optional[int] = Field(None, alias="takedownsFirst25Minutes")
     teleport_takedowns: Optional[int] = Field(None, alias="teleportTakedowns")
-    third_inhibitor_destroyed_time: Optional[int] = Field(None, alias="thirdInhibitorDestroyedTime")
+    third_inhibitor_destroyed_time: Optional[float] = Field(None, alias="thirdInhibitorDestroyedTime")
     three_wards_one_sweeper_count: Optional[int] = Field(None, alias="threeWardsOneSweeperCount")
     vision_score_advantage_lane_opponent: Optional[float] = Field(None, alias="visionScoreAdvantageLaneOpponent")
     infernal_scale_pickup: Optional[int] = Field(None, alias="InfernalScalePickup")
