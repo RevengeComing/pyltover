@@ -8,9 +8,28 @@ class Pyltover(BasePyltover):
         super().__init__(riot_token)
         self.server_addr = server_addr
 
-    async def get_list_of_match_ids_by_puuid(self, puuid: str) -> list[str]:
+    async def get_list_of_match_ids_by_puuid(
+        self,
+        puuid: str,
+        *,
+        startTime: int | None = None,
+        endTime: int | None = None,
+        queue: int | None = None,
+        type: str | None = None,
+        start: int = 0,
+        count: int = 20,
+    ) -> list[str]:
         url = urls.get_list_of_match_ids_by_puuid.format(server_addr=self.server_addr, puuid=puuid)
-        resp = await Pyltover.async_client.get(url)
+        params = {
+            "startTime": startTime,
+            "endTime": endTime,
+            "queue": queue,
+            "type": type,
+            "start": start,
+            "count": count,
+        }
+        params = {key: value for key, value in params.items() if value is not None}
+        resp = await Pyltover.async_client.get(url, params=params)
         if resp.status_code == 200:
             return self._response_json(resp, "v5.get_list_of_match_ids_by_puuid")
         else:
