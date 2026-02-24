@@ -172,18 +172,18 @@ class Challenges(BaseModel):
 
 
 class Missions(BaseModel):
-    player_score0: Optional[float] = Field(alias="playerScore0")
-    player_score1: Optional[float] = Field(alias="playerScore1")
-    player_score2: Optional[float] = Field(alias="playerScore2")
-    player_score3: Optional[float] = Field(alias="playerScore3")
-    player_score4: Optional[float] = Field(alias="playerScore4")
-    player_score5: Optional[float] = Field(alias="playerScore5")
-    player_score6: Optional[float] = Field(alias="playerScore6")
-    player_score7: Optional[float] = Field(alias="playerScore7")
-    player_score8: Optional[float] = Field(alias="playerScore8")
-    player_score9: Optional[float] = Field(alias="playerScore9")
-    player_score10: Optional[float] = Field(alias="playerScore10")
-    player_score11: Optional[float] = Field(alias="playerScore11")
+    player_score0: Optional[float] = Field(None, alias="playerScore0")
+    player_score1: Optional[float] = Field(None, alias="playerScore1")
+    player_score2: Optional[float] = Field(None, alias="playerScore2")
+    player_score3: Optional[float] = Field(None, alias="playerScore3")
+    player_score4: Optional[float] = Field(None, alias="playerScore4")
+    player_score5: Optional[float] = Field(None, alias="playerScore5")
+    player_score6: Optional[float] = Field(None, alias="playerScore6")
+    player_score7: Optional[float] = Field(None, alias="playerScore7")
+    player_score8: Optional[float] = Field(None, alias="playerScore8")
+    player_score9: Optional[float] = Field(None, alias="playerScore9")
+    player_score10: Optional[float] = Field(None, alias="playerScore10")
+    player_score11: Optional[float] = Field(None, alias="playerScore11")
 
 
 class PerkStats(BaseModel):
